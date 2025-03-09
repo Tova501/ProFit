@@ -8,10 +8,10 @@ namespace ProFit.Core.IRepositories
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
-        T? GetById(int id);
-        T Add(T entity);
-        T Update(T entity);
-        void Delete(T entity);
+        Task<List<T>> GetAsync();
+        Task<T?> GetByIdAsync(int id);
+        Task<T> AddAsync(T entity);
+        Task<T> UpdateAsync(int id, T entity);
+        void DeleteAsync(T entity);
     }
 }

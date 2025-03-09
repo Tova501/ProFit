@@ -1,46 +1,46 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFit.Core.IRepositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace ProFit.Data.Reposories
+namespace ProFit.Data.Repositories
 {
-    public class Repository<T>(DataContext context) : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly DataContext _context = context;
-        private readonly DbSet<T> _dbSet = context.Set<T>();
+        protected readonly DataContext _context;
+        protected readonly DbSet<T> _dbSet;
 
-        public T Add(T entity)
+        public Repository(DataContext context)
         {
-            _dbSet.Add(entity);
-            _context.SaveChanges();
+            _context = context;
+            _dbSet = context.Set<T>();
+        }
+
+        public async Task<T> AddAsync(T entity)
+        {
+            await _dbSet.AddAsync(entity);
             return entity;
         }
 
-        public void Delete(T entity)
+        public async void DeleteAsync(T entity)
         {
             _dbSet.Remove(entity);
-            _context.SaveChanges();
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<List<T>> GetAsync()
         {
-            return _dbSet.ToList();
+            return await _dbSet.ToListAsync();
         }
 
-        public T? GetById(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public T Update(T entity)
+        public async Task<T> UpdateAsync(int id, T entity)
         {
-            _dbSet.Update(entity);
-            _context.SaveChanges();
-            return entity;
+            return _dbSet.Update(entity).Entity;
         }
     }
 }

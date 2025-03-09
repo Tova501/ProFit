@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProFit.Core.DTOs;
 
 namespace ProFit.Core.IServices
 {
-    public class ICVService
+    public interface ICVService
     {
+        Task<IEnumerable<CvDTO>> GetAllAsync();
+        Task<CvDTO> GetByIdAsync(int id);
+        Task<CvDTO> AddAsync(CvDTO cv);
+        Task<CvDTO> UpdateAsync(int id, CvDTO cv);
+        Task<bool> DeleteAsync(int id);
     }
 }

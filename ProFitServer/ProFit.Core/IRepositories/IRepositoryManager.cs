@@ -13,6 +13,6 @@ namespace ProFit.Core.IRepositories
         public IRepository<User> Users { get; }
         public IRepository<CV> CVs { get; }
 
-        int Save();
+        Task<int> SaveAsync();
     }
 }

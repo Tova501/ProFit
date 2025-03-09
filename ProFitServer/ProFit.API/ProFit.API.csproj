@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\ProFit.Data\ProFit.Data.csproj" />
   </ItemGroup>
 
 </Project>

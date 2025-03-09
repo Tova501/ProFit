@@ -13,5 +13,6 @@ namespace ProFit.Core.Entities
         public User User { get; set; }
         public Job Job { get; set; }
         public DateTime UploadedDate { get; set; }
+        public int Score { get; set; }
     }
 }
