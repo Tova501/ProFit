@@ -46,11 +46,9 @@ namespace ProFit.Service.Services
             return _mapper.Map<CvDTO>(item);
         }
 
-        public async Task<CvDTO> UpdateAsync(int id, CvDTO cv)
+        public async Task<CvDTO> UpdateAsync(int id, MemoryStream stream)
         {
-            var item = _mapper.Map<CV>(cv);
-            var updated = await _repositoryManager.CVs.UpdateAsync(id, item);
-            return _mapper.Map<CvDTO>(updated);
+            throw new Exception("Not Implemnted");
         }
     }
 }

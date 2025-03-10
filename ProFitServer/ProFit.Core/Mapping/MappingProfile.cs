@@ -16,6 +16,8 @@ namespace ProFit.Core.Mapping
             CreateMap<Job, JobDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<CV, CvDTO>().ReverseMap();
+            CreateMap<Recruiter, RecruiterDTO>().ReverseMap();
+
         }
     }
 }

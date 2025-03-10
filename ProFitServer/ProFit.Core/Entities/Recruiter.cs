@@ -9,10 +9,7 @@ namespace ProFit.Core.Entities
     public class Recruiter
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Company { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
+cc
         public string Password { get; set; }
         public List<Job> Jobs { get; set; }
     }

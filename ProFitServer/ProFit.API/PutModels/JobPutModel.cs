@@ -1,10 +1,9 @@
-﻿namespace ProFit.API.PostModels
+﻿namespace ProFit.API.PutModels
 {
-    public class JobPostModel
+    public class JobPutModel
     {
         public string Title { get; set; }
         public string Description { get; set; }
         public string Requirments { get; set; }
-        public int RecruiterId { get; set; }
     }
 }

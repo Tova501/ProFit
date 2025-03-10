@@ -9,6 +9,6 @@ namespace ProFit.Core.IRepositories
 {
     public interface IJobRepository:IRepository<Job>
     {
-        public Task<Job> GetJobWithCVsAsync(int jobId);
+        public Task<Job?> GetJobWithCVsAsync(int jobId);
     }
 }

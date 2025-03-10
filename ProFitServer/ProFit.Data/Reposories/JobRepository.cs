@@ -14,12 +14,15 @@ namespace ProFit.Data.Reposories
 {
     public class JobRepository : Repository<Job>, IJobRepository
     {
-        public JobRepository(DataContext dataContex) : base(dataContex)
+        public JobRepository(DataContext context) : base(context)
         {
         }
-        public async Task<List<Job>> GetJobsAsync()
+
+        public async Task<Job?> GetJobWithCVsAsync(int jobId)
         {
-            return await _dbSet.Include(x => x.CVs).ToListAsync();
+            return await _context.Jobs
+                .Include(j => j.CVs)
+                .FirstOrDefaultAsync(j => j.Id == jobId);
         }
     }
 }

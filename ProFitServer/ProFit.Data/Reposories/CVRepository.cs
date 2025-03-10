@@ -5,15 +5,14 @@ using System.Threading.Tasks;
 
 namespace ProFit.Data.Repositories
 {
-    public class JobRepository : Repository<Job>, IJobRepository
+    public class CVRepository : Repository<CV>, ICVRepository
     {
-        public JobRepository(DataContext context) : base(context) { }
+        public CVRepository(DataContext context) : base(context) { }
 
-        public async Task<Job> GetJobWithCVsAsync(int jobId)
+        public Task<IEnumerable<CV>> GetCVsWithJobAsync()
         {
-            return await _context.Jobs
-                .Include(j => j.CVs)
-                .FirstOrDefaultAsync(j => j.Id == jobId);
+            throw new NotImplementedException();
         }
+
     }
 }

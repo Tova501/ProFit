@@ -12,14 +12,15 @@ namespace ProFit.Data.Reposories
         DataContext context, 
         IJobRepository jobRepository, 
         IUserRepository userRepository, 
-        ICVRepository cvRepository
+        ICVRepository cvRepository,
+        IRecruiterRepository recruiterRepository
     ) : IRepositoryManager
     {
         private readonly DataContext _context = context;
         public IJobRepository Jobs => jobRepository;
         public IUserRepository Users => userRepository;
         public ICVRepository CVs => cvRepository;
-
+        public IRecruiterRepository Recruiters => recruiterRepository;
 
         public async Task<int> SaveAsync()
         {
