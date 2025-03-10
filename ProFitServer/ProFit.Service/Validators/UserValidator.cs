@@ -22,9 +22,6 @@ namespace ProFit.Service.Validators
             RuleFor(user => user.Password)
                 .NotEmpty().WithMessage("Password is required.")
                 .MinimumLength(8).WithMessage("Password must be at least 8 characters long.");
-
-            RuleFor(user => user.Role)
-                .IsInEnum().WithMessage("Invalid role.");
         }
     }
 }

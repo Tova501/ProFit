@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace ProFit.Core.Entities
 {
-    public class User
+    public class Recruiter
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Company { get; set; }
         public string Email { get; set; }
+        public string Phone { get; set; }
         public string Password { get; set; }
-        public List<CV> CVs { get; set; }
+        public List<Job> Jobs { get; set; }
     }
 }

@@ -1,4 +1,9 @@
-﻿using System;
+﻿using AutoMapper;
+using ProFit.Core.DTOs;
+using ProFit.Core.Entities;
+using ProFit.Core.IRepositories;
+using ProFit.Core.IServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +11,52 @@ using System.Threading.Tasks;
 
 namespace ProFit.Service.Services
 {
-    class JobService
+    class JobService : IJobService
     {
+        private readonly IRepositoryManager _repository;
+        private readonly Mapper _mapper;
+        public JobService(IRepositoryManager repository, Mapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }   
+        public Task<JobDTO> AddAsync(JobDTO job)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var item = await _repository.Jobs.GetByIdAsync(id);
+            if (item == null)
+            {
+                return false;
+            }
+             _repository.Jobs.DeleteAsync(item);
+            return true;
+        }
+
+        public async Task<IEnumerable<JobDTO>> GetAllAsync()
+        {
+            var jobs = await _repository.Jobs.GetAsync();
+            return _mapper.Map<IEnumerable<JobDTO>>(jobs);
+        }
+
+        public async Task<JobDTO> GetByIdAsync(int id)
+        {
+            var job = await _repository.Jobs.GetByIdAsync(id);
+            return _mapper.Map<JobDTO>(job);
+        }
+
+        public async Task<List<CV>> GetCVsByJobId(int id)
+        {
+            var job = await _repository.Jobs.GetJobWithCVsAsync(id);
+            return job.CVs.ToList();
+        }
+
+        public Task<JobDTO> UpdateAsync(int id, JobDTO job)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

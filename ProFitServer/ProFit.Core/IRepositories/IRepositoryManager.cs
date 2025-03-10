@@ -9,9 +9,10 @@ namespace ProFit.Core.IRepositories
 {
     public interface IRepositoryManager
     {
-        public IRepository<Job> Jobs { get; }
-        public IRepository<User> Users { get; }
-        public IRepository<CV> CVs { get; }
+        public IJobRepository Jobs { get; }
+        public IUserRepository Users { get; }
+        public ICVRepository CVs { get; }
+        public IRecruiterRepository Recruiters { get; }
 
         Task<int> SaveAsync();
     }

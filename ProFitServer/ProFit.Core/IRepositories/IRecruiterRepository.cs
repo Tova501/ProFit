@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProFit.Core.IRepositories
 {
-    public interface IUserRepository:IRepository<User>
+    public interface IRecruiterRepository:IRepository<Recruiter>
     {
     }
 }

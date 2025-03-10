@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ProFit.Core.IRepositories
 {
-    public interface IJobRepository
+    public interface IJobRepository:IRepository<Job>
     {
-        Task<List<Job>> GetJobsAsync();
+        public Task<Job> GetJobWithCVsAsync(int jobId);
     }
 }

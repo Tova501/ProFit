@@ -10,6 +10,10 @@ namespace ProFit.Service.Validators
 {
     public class UserUpdateValidator:AbstractValidator<UserDTO>
     {
-
+        public UserUpdateValidator()
+        {
+            RuleFor(user => user.Name)
+                .NotEmpty().WithMessage("Name is required.");
+        }
     }
 }
