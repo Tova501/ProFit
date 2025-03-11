@@ -8,6 +8,6 @@ namespace ProFit.Core.IServices
         Task<CvDTO> GetByIdAsync(int id);
         Task<CvDTO> AddAsync(CvDTO cv);
         Task<CvDTO> UpdateAsync(int id, MemoryStream stream);
-        Task<bool> DeleteAsync(int id);
+        Task DeleteAsync(int id);
     }
 }

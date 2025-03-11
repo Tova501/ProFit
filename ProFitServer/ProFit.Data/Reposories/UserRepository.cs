@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProFit.Data.Reposories
 {
-    class UserRepository(DataContext context):Repository<User>(context), IUserRepository
+    public class UserRepository(DataContext context):Repository<User>(context), IUserRepository
     {
     }
 }

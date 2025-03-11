@@ -39,18 +39,19 @@ namespace ProFit.Service.Services
             }
             var mappedUser = _mapper.Map<User>(user);
             var result = await _repository.Users.AddAsync(mappedUser);
-            _repository.Save();
+            await _repository.SaveAsync();
             return _mapper.Map<UserDTO>(result);
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            var item = _repository.Users.GetByIdAsync(id);
+            var item = await _repository.Users.GetByIdAsync(id);
             if(item == null)
             {
                 throw new Exception("User not found");
             }
-            return _repository.Users.DeleteAsync(id);
+            _repository.Users.DeleteAsync(item);
+            await _repository.SaveAsync();
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllAsync()

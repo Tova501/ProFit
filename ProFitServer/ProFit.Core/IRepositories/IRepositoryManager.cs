@@ -12,7 +12,6 @@ namespace ProFit.Core.IRepositories
         public IJobRepository Jobs { get; }
         public IUserRepository Users { get; }
         public ICVRepository CVs { get; }
-        public IRecruiterRepository Recruiters { get; }
 
         Task<int> SaveAsync();
     }

@@ -13,6 +13,6 @@ namespace ProFit.Core.IServices
         Task<UserDTO> GetByIdAsync(int id);
         Task<UserDTO> AddAsync(UserDTO user);
         Task<UserDTO> UpdateAsync(int id, UserDTO user);
-        Task<bool> DeleteAsync(int id);
+        Task DeleteAsync(int id);
     }
 }

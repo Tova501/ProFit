@@ -12,6 +12,8 @@ namespace ProFit.Core.Entities
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string? Company { get; set; }
+        public List<Job> Jobs { get; set; }
         public List<CV> CVs { get; set; }
     }
 }

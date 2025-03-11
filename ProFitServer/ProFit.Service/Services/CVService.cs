@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace ProFit.Service.Services
 {
-    class CVService : ICVService
+    public class CVService : ICVService
     {
-        private readonly Mapper _mapper;
+        private readonly IMapper _mapper;
         private readonly IRepositoryManager _repositoryManager;
-        public CVService(IRepositoryManager repositoryManager, Mapper mapper)
+        public CVService(IRepositoryManager repositoryManager, IMapper mapper)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
@@ -24,14 +24,22 @@ namespace ProFit.Service.Services
         public async Task<CvDTO> AddAsync(CvDTO cv)
         {
             var newCV = _mapper.Map<CV>(cv);
-            _repositoryManager.CVs.AddAsync(newCV);
+            //uploading the CV
+            newCV.UploadedDate = DateTime.Now;
+            await _repositoryManager.CVs.AddAsync(newCV);
             await _repositoryManager.SaveAsync();
             return _mapper.Map<CvDTO>(cv);
         }
 
-        public Task<bool> DeleteAsync(int id)
-        { 
-            return _repositoryManager.CVs.DeleteAsync(id);
+        public async Task DeleteAsync(int id)
+        {
+            var cv = await _repositoryManager.CVs.GetByIdAsync(id);
+            if (cv == null)
+            {
+                throw new Exception("not found");
+            }
+            _repositoryManager.CVs.DeleteAsync(cv);
+            await _repositoryManager.SaveAsync();
         }
 
         public async Task<IEnumerable<CvDTO>> GetAllAsync()

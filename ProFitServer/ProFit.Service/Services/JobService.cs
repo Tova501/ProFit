@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace ProFit.Service.Services
 {
-    class JobService : IJobService
+    public class JobService : IJobService
     {
         private readonly IRepositoryManager _repository;
-        private readonly Mapper _mapper;
-        public JobService(IRepositoryManager repository, Mapper mapper)
+        private readonly IMapper _mapper;
+        public JobService(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -25,15 +25,14 @@ namespace ProFit.Service.Services
             throw new NotImplementedException();
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
             var item = await _repository.Jobs.GetByIdAsync(id);
             if (item == null)
             {
-                return false;
+                throw new Exception("User Not Found");
             }
              _repository.Jobs.DeleteAsync(item);
-            return true;
         }
 
         public async Task<IEnumerable<JobDTO>> GetAllAsync()

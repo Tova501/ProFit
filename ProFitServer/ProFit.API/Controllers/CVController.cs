@@ -14,8 +14,8 @@ namespace ProFit.API.Controllers
     public class CVController : ControllerBase
     {
         private readonly ICVService _cvService;
-        private readonly Mapper _mapper;
-        public CVController(ICVService cVService, Mapper mapper)
+        private readonly IMapper _mapper;
+        public CVController(ICVService cVService, IMapper mapper)
         {
             _cvService = cVService;
             _mapper = mapper;
@@ -48,7 +48,7 @@ namespace ProFit.API.Controllers
 
         // PUT api/<CVController>/5
         [HttpPut("{id}")]
-        public async ActionResult<string> Put(int id, [FromBody]IFormFile file)
+        public async Task<ActionResult<string>> Put(int id, [FromBody]IFormFile file)
         {
             if (file == null || file.Length == 0)
             {
