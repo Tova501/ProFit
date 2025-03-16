@@ -23,7 +23,6 @@ namespace ProFit.Data.Reposories
                 return false;
 
             role.Permissions.Add(permission);
-            await _context.SaveChangesAsync();
             return true;
         }
 

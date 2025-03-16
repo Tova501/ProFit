@@ -9,6 +9,6 @@ namespace ProFit.Core.IRepositories
 {
     public interface IPermissionRepository:IRepository<Permission>
     {
-        public Task<Permission> GetPermissionByNameAsync(string name);
+        public Task<Permission?> GetPermissionByNameAsync(string name);
     }
 }

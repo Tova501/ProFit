@@ -24,5 +24,11 @@ namespace ProFit.Data.Reposories
                 .Include(j => j.CVs)
                 .FirstOrDefaultAsync(j => j.Id == jobId);
         }
+
+        public async override Task<Job> UpdateAsync(int id, Job entity)
+        {
+            entity.UpdatedAt = DateOnly.FromDateTime(DateTime.Now);
+            return await base.UpdateAsync(id, entity);
+        }
     }
 }

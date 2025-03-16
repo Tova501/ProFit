@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ProFit.Core.Entities;
+using ProFit.Core.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +8,10 @@ using System.Threading.Tasks;
 
 namespace ProFit.Service.Validators
 {
-    public class UserValidator:AbstractValidator<User>
+    class RegisterValidator:AbstractValidator<UserDTO>
     {
-        public UserValidator()
+        public RegisterValidator()
         {
-            RuleFor(user => user.Name)
-                .NotEmpty().WithMessage("Name is required.");
-
             RuleFor(user => user.Email)
                 .NotEmpty().WithMessage("Email is required.")
                 .EmailAddress().WithMessage("Invalid email format.");
@@ -22,6 +19,9 @@ namespace ProFit.Service.Validators
             RuleFor(user => user.Password)
                 .NotEmpty().WithMessage("Password is required.")
                 .MinimumLength(8).WithMessage("Password must be at least 8 characters long.");
+
+            RuleFor(user => user.Name)
+                .NotEmpty().WithMessage("Name is required.");
         }
     }
 }
