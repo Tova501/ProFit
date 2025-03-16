@@ -8,11 +8,22 @@ using System.Threading.Tasks;
 
 namespace ProFit.Core.IServices
 {
-    public interface IUserService { 
-        Task<IEnumerable<UserDTO>> GetAllAsync();
-        Task<UserDTO> GetByIdAsync(int id);
-        Task<UserDTO> AddAsync(UserDTO user);
-        Task<UserDTO> UpdateAsync(int id, UserDTO user);
-        Task DeleteAsync(int id);
+    public interface IUserService 
+    {
+        //GET
+        public Task<IEnumerable<UserDTO>> GetAllUsersAsync();
+        public Task<UserDTO> GetUserByIdAsync(int id);
+        public Task<UserDTO> GetUserByEmailAsync(string email);
+
+        //PUT
+        public Task<UserDTO> RegisterAsync(UserDTO user);
+
+        //POST
+        public Task<UserDTO> LoginAsync(string email, string password);
+        public Task<bool> UpdatePasswordAsync(int id, string email);
+        public Task<bool> UpdateNameAsync(int id, string email);
+
+        //DELETE
+        public Task<bool> DeleteUserAsync(int id);
     }
 }

@@ -5,8 +5,9 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import '../styles/Home.css';
+import { Typography } from '@mui/material';
 
-const Home: React.FC = () => {
+const Home = () => {
   return (
     <div>
       <Navbar />

@@ -9,10 +9,10 @@ namespace ProFit.Data.Repositories
     {
         public CVRepository(DataContext context) : base(context) { }
 
-        public Task<IEnumerable<CV>> GetCVsWithJobAsync()
+        public async override Task<CV> UpdateAsync(int id, CV entity)
         {
-            throw new NotImplementedException();
+            entity.UpdatedAt = DateOnly.FromDateTime(DateTime.Now);
+            return await base.UpdateAsync(id, entity);
         }
-
     }
 }

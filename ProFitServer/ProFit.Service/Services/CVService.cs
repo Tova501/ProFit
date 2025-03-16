@@ -25,21 +25,21 @@ namespace ProFit.Service.Services
         {
             var newCV = _mapper.Map<CV>(cv);
             //uploading the CV
-            newCV.UploadedDate = DateTime.Now;
             await _repositoryManager.CVs.AddAsync(newCV);
             await _repositoryManager.SaveAsync();
             return _mapper.Map<CvDTO>(cv);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var cv = await _repositoryManager.CVs.GetByIdAsync(id);
-            if (cv == null)
+            if(cv == null)
             {
-                throw new Exception("not found");
+                return false;
             }
             _repositoryManager.CVs.DeleteAsync(cv);
             await _repositoryManager.SaveAsync();
+            return true;
         }
 
         public async Task<IEnumerable<CvDTO>> GetAllAsync()
@@ -47,7 +47,7 @@ namespace ProFit.Service.Services
             var cvList = await _repositoryManager.CVs.GetAsync();
             return _mapper.Map<IEnumerable<CvDTO>>(cvList);
         }
-
+        
         public async Task<CvDTO> GetByIdAsync(int id)
         {
             var item = _repositoryManager.CVs.GetByIdAsync(id);

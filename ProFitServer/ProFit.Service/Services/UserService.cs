@@ -16,59 +16,65 @@ namespace ProFit.Service.Services
 {
     public class UserService : IUserService
     {
-        private readonly IRepositoryManager _repository;
-        IMapper _mapper;
-        private readonly IValidator<UserDTO> _userValidator;
-
-        public UserService(IRepositoryManager repositoryManager, 
-                            IMapper mapper,
-                            IValidator<UserDTO> validator) 
+        readonly IUserRepository _userRepository;
+        readonly IMapper _mapper;
+        public UserService(IMapper mapper, IUserRepository userRepository)
         {
-            _repository = repositoryManager;
             _mapper = mapper;
-            _userValidator = validator;
+            _userRepository = userRepository;
         }
-
-        public async Task<UserDTO> AddAsync(UserDTO user)
+        public async Task<bool> DeleteUserAsync(int id)
         {
-            var validationResult = _userValidator.Validate(user);
-
-            if (!validationResult.IsValid)
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null)
             {
-                throw new ValidationException(validationResult.Errors);
+                return false;
             }
-            var mappedUser = _mapper.Map<User>(user);
-            var result = await _repository.Users.AddAsync(mappedUser);
-            await _repository.SaveAsync();
-            return _mapper.Map<UserDTO>(result);
+            await _userRepository.DeleteAsync(user);
+            return true;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
         {
-            var item = await _repository.Users.GetByIdAsync(id);
-            if(item == null)
-            {
-                throw new Exception("User not found");
-            }
-            _repository.Users.DeleteAsync(item);
-            await _repository.SaveAsync();
+            var res = await _userRepository.GetAsync();
+            return _mapper.Map<UserDTO[]>(res);
         }
 
-        public async Task<IEnumerable<UserDTO>> GetAllAsync()
+        public async Task<UserDTO> GetUserByEmailAsync(string email)
         {
-            var result = await _repository.Users.GetAsync();
-            return _mapper.Map<IEnumerable<UserDTO>>(result);
+            var res = await _userRepository.GetUserByEmailAsync(email);
+            return _mapper.Map<UserDTO>(res);
         }
 
-        public async Task<UserDTO> GetByIdAsync(int id)
+        public async Task<UserDTO> GetUserByIdAsync(int id)
         {
-            var result = await _repository.Users.GetByIdAsync(id);
-            return _mapper.Map<UserDTO>(result);
+            var res = await _userRepository.GetByIdAsync(id);
+            return _mapper.Map<UserDTO>(res);
         }
 
-        public Task<UserDTO> UpdateAsync(int id, UserDTO user)
+        public async Task<UserDTO> LoginAsync(string email, string password)
         {
-            throw new NotImplementedException();
+            var res = _userRepository.LoginAsync(email, password);
+            return _mapper.Map<UserDTO>(res);
         }
+
+        public async Task<UserDTO> RegisterAsync(UserDTO user)
+        {
+            var res = await _userRepository.AddAsync(_mapper.Map<User>(user));
+            return _mapper.Map<UserDTO>(res);
+
+
+        }
+
+        public async Task<bool> UpdateNameAsync(int id, string email)
+        {
+            return await _userRepository.UpdateNameAsync(id, email);
+        }
+
+        public async Task<bool> UpdatePasswordAsync(int id, string email)
+        {
+            return await _userRepository.UpdatePasswordAsync(id, email);
+        }
+
     }
 }

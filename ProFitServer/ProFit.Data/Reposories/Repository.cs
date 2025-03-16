@@ -38,7 +38,7 @@ namespace ProFit.Data.Repositories
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<T> UpdateAsync(int id, T entity)
+        public async virtual Task<T> UpdateAsync(int id, T entity)
         {
             return _dbSet.Update(entity).Entity;
         }
