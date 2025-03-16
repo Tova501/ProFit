@@ -7,6 +7,7 @@ using ProFit.Core.IRepositories;
 using ProFit.Data.Reposories;
 using ProFit.Data.Repositories;
 using ProFit.API.Mapping;
+using AutoMapper;
 
 namespace ProFit.API
 {
