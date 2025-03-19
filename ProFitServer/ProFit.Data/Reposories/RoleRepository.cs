@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ProFit.Data.Reposories
 {
-    class RoleRepository : Repository<Role>, IRoleRepository
+    public class RoleRepository : Repository<Role>, IRoleRepository
     {
         public RoleRepository(DataContext context) : base(context)
         {

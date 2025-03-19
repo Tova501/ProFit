@@ -13,13 +13,20 @@ namespace ProFit.Core.Entities
     {
         [Key]
         public int Id { get; set; }
+        
         [Required]
         [MaxLength(50)]
         public string RoleName { get; set; }
+        
         public string Description { get; set; }
-        [Required]
-        public DateOnly CreatedAt { get; set; } = DateOnly.FromDateTime(DateTime.Now);
-        public DateOnly UpdatedAt { get; set; }
+
+
+        [Column("CreatedAt", TypeName = "timestamp with time zone")]
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        
+        [Column("UpdatedAt", TypeName = "timestamp with time zone")]
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        
         public ICollection<User>? Users { get; set; } = new List<User>();
         public ICollection<Permission> Permissions { get; set; } = new List<Permission>();
     }

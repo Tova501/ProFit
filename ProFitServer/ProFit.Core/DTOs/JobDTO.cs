@@ -14,6 +14,7 @@ namespace ProFit.Core.DTOs
         public string Description { get; set; }
         public string Requirments { get; set; }
         public int RecruiterId { get; set; }
-        public DateTime Created { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

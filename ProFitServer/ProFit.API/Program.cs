@@ -2,16 +2,17 @@ using Microsoft.EntityFrameworkCore;
 using ProFit.Service.Services;
 using ProFit.Core.IServices;
 using ProFit.Data;
-using System.Configuration;
 using ProFit.Core.IRepositories;
 using ProFit.Data.Reposories;
 using ProFit.Data.Repositories;
 using ProFit.API.Mapping;
-using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using FluentValidation.AspNetCore;
+using ProFit.Service.Validators;
+using FluentValidation;
 
 namespace ProFit.API
 {
@@ -24,25 +25,36 @@ namespace ProFit.API
             // Add services to the container.
             builder.Services.AddControllers();
 
-            builder.Services.AddDbContext<DataContext>(
-                options => options.UseMySQL("Server=bc6mrmq0t2din2zxkdjl-mysql.services.clever-cloud.com;Database=bct2din2zxkdjl;Uid=ujjthrzf1g;Pwd=qNRbTyhfghfKRjVQ;Port=3306;"));
+            builder.Services.AddDbContext<DataContext>(options =>
+            {
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
             builder.Services.AddScoped<IJobService, JobService>();
             builder.Services.AddScoped<ICVService, CVService>();
             builder.Services.AddScoped<IJobService, JobService>();
+            builder.Services.AddScoped<IRoleService, RoleService>();
+            builder.Services.AddScoped<IPermissionService, PermissionService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
 
             builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
             builder.Services.AddScoped<IJobRepository, JobRepository>();
             builder.Services.AddScoped<ICVRepository, CVRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+            builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
-
+            
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssemblyContaining<RegisterValidator>();
+            
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(options =>
-             {
+            {
                  options.TokenValidationParameters = new TokenValidationParameters
                  {
                      ValidateIssuer = true,
@@ -53,10 +65,8 @@ namespace ProFit.API
                      ValidAudience = builder.Configuration["JWT:Audience"],
                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
                  };
-             });
+            });
 
-            var app = builder.Build();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddSwaggerGen(options =>
@@ -85,6 +95,8 @@ namespace ProFit.API
                     }
                 });
             });
+
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

@@ -30,7 +30,7 @@ namespace ProFit.Service.Services
             {
                 return false;
             }
-            await _userRepository.DeleteAsync(user);
+            _userRepository.DeleteAsync(user);
             return true;
         }
 

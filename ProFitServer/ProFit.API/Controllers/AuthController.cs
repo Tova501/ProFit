@@ -14,57 +14,55 @@ namespace ProFit.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly IUserService _userService;
         private readonly IMapper _mapper;
         private readonly IAuthService _authService;
-        private readonly IValidator<UserDTO> _registerValidator;
+
         public AuthController(
-            IConfiguration configuration, 
-            IUserService userService, 
-            IMapper mapper,
-            IValidator<UserDTO> validator)
+            IConfiguration configuration,
+            IAuthService authService,
+            IMapper mapper)
         {
             _configuration = configuration;
-            _userService = userService;
+            _authService = authService;
             _mapper = mapper;
-            _registerValidator = validator;
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult> Login([FromBody] LoginModel loginModel)
-        {
-            var res = await _userService.LoginAsync(loginModel.Email, loginModel.Password);
-            if (res == null)
-                return NotFound();
-            if (res.IsActive == false)
-                return Unauthorized();
-
-            var tokenString = _authService.GenerateJwtToken(res.Name, res.Roles.Select(r => r.RoleName).ToArray());
-            return Ok(new { Token = tokenString, user = res });
-        }
-
-        // POST api/<UserController>
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register([FromBody] UserPostModel userRegister)
+        public async Task<IActionResult> Register([FromBody] RegisterModel userRegister)
         {
             var user = _mapper.Map<User>(userRegister);
             var userDTO = _mapper.Map<UserDTO>(user);
-            var validationResults = _registerValidator.Validate(userDTO);
-            if (!validationResults.IsValid)
+
+            var authResult = await _authService.RegisterAsync(userDTO);
+
+            if (!authResult.IsSuccess)
             {
-                return BadRequest(validationResults.Errors);
+                if(authResult.ErrorCode == 409)
+                {
+                    return Conflict(authResult.ErrorMessage);
+                }
+                return BadRequest(authResult.ErrorMessage);
             }
 
-            var res = await _userService.RegisterAsync(_mapper.Map<UserDto>(userRegister.User), userRegister.Roles);
-            if (res == null)
-            {
-                return BadRequest();
-            }
-
-            var tokenString = _authService.GenerateJwtToken(res.Name, userRegister.Roles);
-            return Ok(new { Token = tokenString, user = res });
+            return Ok(authResult.Value);
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginModel userLogin)
+        {
+            var user = _mapper.Map<User>(userLogin);
+            var userDTO = _mapper.Map<UserDTO>(user);
+            var authResult = await _authService.LoginAsync(userDTO);
+
+            if (!authResult.IsSuccess)
+            {
+                return Unauthorized(authResult.ErrorMessage);
+            }
+
+            return Ok(authResult.Value);
+        }
+
     }
 }
 

@@ -18,7 +18,9 @@ public class Job
     [ForeignKey("RecruiterId")]
     public User User { get; set; }
     public List<CV> CVs { get; set; } = new List<CV>();
-    public DateOnly CreatedAt { get; set; } = DateOnly.FromDateTime(DateTime.Now);
-    public DateOnly UpdatedAt { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+    [Column("CreatedAt", TypeName = "timestamp with time zone")]
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    [Column("UpdatedAt", TypeName = "timestamp with time zone")]
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
 }

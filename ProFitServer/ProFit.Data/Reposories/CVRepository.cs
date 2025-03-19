@@ -11,7 +11,7 @@ namespace ProFit.Data.Repositories
 
         public async override Task<CV> UpdateAsync(int id, CV entity)
         {
-            entity.UpdatedAt = DateOnly.FromDateTime(DateTime.Now);
+            entity.UpdatedAt = DateTime.Now;
             return await base.UpdateAsync(id, entity);
         }
     }

@@ -12,7 +12,7 @@ namespace ProFit.Core.DTOs
         public string Path { get; set; }
         public int UserId { get; set; }
         public int JobId { get; set; }
-        public DateTime UploadedDate { get; set; }
+        public DateTime UploadedAt { get; set; }
         public int Score { get; set; }
     }
 }

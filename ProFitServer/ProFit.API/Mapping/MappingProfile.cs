@@ -12,8 +12,9 @@ namespace ProFit.API.Mapping
         public MappingProfile()
         {
             CreateMap<Job, JobPostModel>().ReverseMap();
-            CreateMap<User, UserPostModel>().ReverseMap();
             CreateMap<CV, CVPostModel>().ReverseMap();
+            CreateMap<User, LoginModel>().ReverseMap();
+            CreateMap<User, RegisterModel>().ReverseMap();
 
             CreateMap<Job, JobPutModel>().ReverseMap();
             CreateMap<User, UserPutModel>().ReverseMap();

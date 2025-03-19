@@ -11,7 +11,9 @@ public class CV
     public int JobId { get; set; }
     [ForeignKey("JobId")]
     public Job Job { get; set; }
-    public DateOnly UploadedAt { get; set; }
-    public DateOnly UpdatedAt { get; set; }
+    [Column("UploadedAt", TypeName = "timestamp with time zone")]
+    public DateTime UploadedAt { get; set; } = DateTime.UtcNow;
+    [Column("UpdatedAt", TypeName = "timestamp with time zone")]
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     public int Score { get; set; }
 }

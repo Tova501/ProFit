@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProFit.Core.Entities
 {
+
     [Table("Users")]
     public class User
     {
@@ -25,8 +26,9 @@ namespace ProFit.Core.Entities
         public string? Company { get; set; }
         public List<Job> Jobs { get; set; } = new List<Job>();
         public List<CV> CVs { get; set; } = new List<CV>();
-        [Required]
         public ICollection<Role> Roles { get; set; } = new HashSet<Role>();
         public bool IsActive { get; set; } = true;
+        [Column("CreatedAt", TypeName = "timestamp with time zone")]
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

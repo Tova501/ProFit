@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ProFit.Core.DTOs;
+using ProFit.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProFit.Service.Validators
 {
-    class RegisterValidator:AbstractValidator<UserDTO>
+    public class RegisterValidator:AbstractValidator<User>
     {
         public RegisterValidator()
         {

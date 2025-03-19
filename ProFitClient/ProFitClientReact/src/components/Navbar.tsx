@@ -15,6 +15,9 @@ const Navbar: React.FC = () => {
         <Button color="inherit" startIcon={<HomeIcon />}>
           Home
         </Button>
+        <Button color="inherit">Login</Button>
+        <Button color="inherit">Register
+        </Button>
       </Toolbar>
     </AppBar>
   );

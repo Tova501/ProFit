@@ -27,7 +27,7 @@ namespace ProFit.Data.Reposories
 
         public async override Task<Job> UpdateAsync(int id, Job entity)
         {
-            entity.UpdatedAt = DateOnly.FromDateTime(DateTime.Now);
+            entity.UpdatedAt = DateTime.Now;
             return await base.UpdateAsync(id, entity);
         }
     }

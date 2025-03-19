@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ProFit.Service.Services
 {
-    class PermissionService:IPermissionService
+    public class PermissionService:IPermissionService
     {
         readonly IPermissionRepository _permissionRepository;
         readonly IMapper _mapper;
